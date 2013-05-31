@@ -61,8 +61,6 @@ MEDIA_URL = settings_local.MEDIA_URL
 # Examples: "http://foo.com/media/", "/media/".
 ADMIN_MEDIA_PREFIX = '/media/'
 
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = '4a2tyvvvua)4qz*g&)2i$k2q-b0lwcy=-#cjt(o#&@_c=&a=#)'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
