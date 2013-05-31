@@ -1,0 +1,7 @@
+{% if form_age_is %}{{ form_age_is }}{% else %} is {% endif %} {{ form_filter_value }}
+
+{% if is_text_input%}
+<script>
+	  $('#{{ id }}').autocomplete("/profile/search/{{ demographic }}/{{ many2many }}/");
+</script>
+{% endif %}

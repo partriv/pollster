@@ -1,0 +1,7 @@
+{% ifequal len 0 %}
+	No inactive!
+{% else %}	
+	{% for p in polls %}
+		 {{ p.question }} <a href="/create-poll/answers/{{ p.url }}/">Edit</a><br/>
+	{% endfor %}
+{% endifequal %}

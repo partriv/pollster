@@ -1,0 +1,350 @@
+
+
+
+Pollster marketing blurbs:
+
+
+ONGOING
+ 2 NEW POLLS A DAY
+ 3-7 NEW VOTES A DAY PER POLL
+ 60~ NEW USERS
+ SEO TASKS
+ 
+ 
+ 
+   File "/home/par/pollstruck/pollster/views/pollcreate.py", line 209, in finish
+    PollService().uploadPollFile(p, f)
+  File "/home/par/pollstruck/pollster/services/poll.py", line 78, in uploadPollFile
+    name = FileUtils.uploadFile(file, upload_path=settings_local.UPLOAD_POLL_FILES_PATH, thumbnails=thumbs)
+  File "/home/par/pollstruck/pollster/utils/file.py", line 43, in uploadFile
+    img = Image.open(uploadPath)
+  File "/usr/local/lib/python2.5/site-packages/PIL/Image.py", line 1916, in open
+    raise IOError("cannot identify image file")
+IOError: cannot identify image file
+ 
+  
+##################
+
+CURRENT RELEASE
+
+##################
+home page blue bar show most popular poll, most active users, etc.
+sorting on more of the the other poll lister pages!!
+top polls for a user on their profile page?
+some kind of icons on the user settings page?  needs love
+twitter integration
+print persone name under pic
+email on friend
+email on message
+q-balls says if u vote on a poll the website should tell u if u are in the popular vote
+Automatically post polls to your facebook
+Suggest similar questions for poll17
+graphics type heading for poll creator??
+
+most voted on
+most popular
+most unsual
+editors pick
+
+
+
+##################
+BACKLOG
+##################
+
+Every ajax thing should have an indicator
+PRESS ENTER BUTTON ON TEXT FIELD IN CREATOR SUBMITS FORM HENCE CREATING POLL PRE-MATURELY O FUCK
+WTF IS THIS make stats on the poll view
+
+we should be able to control what we can and cant see int he activity feed, at the moment there is way too much info going on!
+top friends function on friends list
+can we search for a user and their polls?
+what is user profile for?
+placement of user login and new mail stuff in header
+ 
+maybe you already have this but can i compare friends voting similarity and rank them or users that vote like me 92% of the time
+
+add some informative/useful text to profile page
+
+Only one video - pbob
+
+add 'SEPERATE BY COMMA' HELP TEXT  for interests, about, etc, on demo editor on user profile
+crate method to reconcile tags added like this 'palin fey politics alasksa'
+safari crash, google ad problem?
+
+
+lengthen file input boxes on creator
+re-sort answers (drag/drop) during creation
+Delete a poll
+user name somehow on friend icons!!!!!!
+max file size for uploads
+apache config
+poll lister, display the poll specially if it was made by your friend
+auto add friend thingie
+
+your poll is up 25% today in popularity
+
+more link for friends
+user setting: allow other users to see what you are watching
+user setting: hide help icons	
+lightbox edit profile picture page
+setting for allowing whether people can view polls uve voted on or not
+
+HALF-DONE tag browsing: filter/surf modes
+demographic security: as user filles it out, they should be 
+	able to hide each one individually from users (but they still show up during poll filters, 
+	although at that time it cannot be traced back to user)
+Add demographic view (done?)
+demos: Add And functionality
+demos: Add OR functionality
+		instead of getting all votes filter it down to to use a subset of voters 
+		based on a criteria of demographics that can be && and || together.
+Add answers vs time view
+
+
+about the display format, we were thinking long term like advertisers can even use your website for market research or to boost their product ie, 'a widespread poll on pollstruck gave coke 28% more 'pollcats' than pepsi' -not pollcats but something gimmiky, and display it with small cartoons??
+-Maybe to consider when creating poll rankings
+It would be nice to be able to change your answers to the polls on the fly.
+
+
+
+
+##################
+DONE PENDING TEST
+##################
+
+
+
+##################
+DONE
+##################
+DONE raw percentages
+DONE reformat comments to use bigger user pic
+DONE CATEGORIES FOR POLLS
+DONE when u click random poll it takes u to poll u have already done, it should only take u to new polls that user has not done??  what do u think?
+DONE clean up tags in heading (ajax pull the bulk?)
+DONE random poll could take you to a new poll if avail
+DONE show setting to use pic from fb or site in the change profile pic page
+DONE get email alerts on their own polls  (comment email alert?)
+DONE make sure to collect fb user emails
+DONE email whenm someone votes on your poll
+DONE Prominence of link in the poll view
+DONE ajax indicator on new comment push
+DONE indicator on comment post
+DONE Poll creator preview mode
+DONE when adding tags, allow to add multiple seperated by commas
+NOPE deleting polls
+DONE view sent mail in the mailbox
+DONE EDIT POLL MAKE IT INACTIVE
+DONE click on tag in header to show/hide more tags
+DONE facebook connect
+DONE longer length for answers
+DONE additional colors in chart (esp pie)
+DONE paging/facebook style 'more' for activity feed
+DONE create indexes
+DONE HAVE THE FUCKING THING, REPLY MESSAGE CONTAIN THE ORIGINAL TEXT GOD DAMMIT
+DONE Messaging a user can be done only once - the "Message sent" text does not go away when clicking Send Message again. This is a corner case because people rarely send two messages in a row.
+DONE Indicator for message sending
+DONE go to comment thread after threaded reply
+DONE get rid of black drop shadow on voted icon
+DONE view activity on your own profile page of what is happening on your polls
+DONE delete a comment!
+DONE show all results for poll
+DONE after vote replace answer choices with results including voted on by how many users, etc.
+DONE tabs for chart types nav
+DONE save chart type as user defeault on selection
+DONE inline editing of title box in creator
+DONE enter key for add answer, tag and inline box editing
+DONE admin feature to mail all users
+DONE poll creator: clear tag box after entering
+DONE poll editing: maybe if no one has voted, or some shit, allow edits., look into this
+DONE mod_wsgi release
+DONE google chrome voting
+DONE fix the ads thing (TRUCK)
+DONE post to facebook
+DONE Contact Us
+DONE About Us
+DONE bug in registration of errors on hidden fields
+DONE get message if a user watches your poll
+DONE user pic on comments
+DONE more link for polls u r watching
+DONE friend image placeholder
+DONE your friends icons in profile side nav
+DONE finish registration page
+DONE clean up tag nav?
+DONE more button in tag nav
+DONE rest of help text
+DONE Comments design
+DONE check user name availability on registration
+DONE DESIGN PASS #2
+DONE ToS
+DONE icons/img placeholders for other file types
+DONE change password
+DONE add lost password
+DONE add lost username
+DONE Terms and services
+DONE Add captcha on registration
+DONE honey pot on registration field
+DONE title tags
+DONE search for tag by textbox (probably a drop down on search page)
+DONE register link from login page should follow next param
+DONE when showing answer choices, they should be sorted by most to least
+DONE user avatar
+DONE sorting tool bars on home page, etc
+DONE tag cloud
+DONE add a friend
+DONE on home page in right nav show top 10 polls in X(24?) hours
+DONE in Poll View show users who are watching that poll
+DONE on poll view in right nav show 'similar polls' (use tags)
+DONE user to user messaging
+DONE paging
+DONE view polls you have voted on
+DONE logging
+DONE implement more chart types
+DONE add ad's
+DONE Embedding video
+DONE image resizing
+DONE flag poll as inappropriate
+DONE Capture what user has added an answer to the poll
+
+* Pollster
+** DONE CSS Layout
+*** DONE Whole site
+**** DONE make 2 col + header + footer + layout 
+**** DONE home page tag nav moved to right side
+**** DONE Style home page poll links
+**** DONE Style poll view page
+**** DONE finish styling poll creator
+**** DONE style reg, login
+**** DONE about, contact
+
+** DONE Logging
+
+** DONE Pages
+*** DONE Home
+**** DONE Poll lister
+***** DONE icons in lister for videos, etc
+**** DONE sorting
+**** DONE paging 
+*** DONE View Poll
+**** DONE No Url goes to random poll
+**** DONE Header
+***** DONE Show added links
+***** DONE Show Description
+***** DONE Show added pictures
+**** DONE Show poll
+***** DONE Pie charts
+***** DONE Must tie in with remaining charts
+
+**** DONE Demographic filter
+***** DONE Add appropriate demo filters
+
+**** DONE Answers
+***** DONE View types for answers
+****** DONE Top x answers are radio buttons, then possibly add your own answer with auto suggest
+****** NOPE Checkbox poll for selecting multiple answers
+***** DONE Vote
+****** DONE Must be logged in to vote
+****** DONE Only vote once
+****** DONE Add your own answer if poll allows it else dont shot
+****** DONE Show your answer if already voted
+****** DONE Add some kind of vote_count field to the poll in db and index it for fast sorting of polls by votes
+**** DONE Tags
+***** DONE Show searchable tags
+**** DONE Comments
+***** TODO Keep Django security features
+***** DONE Prompt for optional name
+***** DONE Prompt for optional email
+***** DONE Prompt for optional website
+***** DONE Have page refresh on comment submit
+**** NOPE Ratings
+***** NOPE have some kind of poll rating, rate a poll from 1-5 stars?
+If we want ratings we should derive them from the vote & comment count.
+having ratings on a poll feels like 'too much to click' 
+
+*** DONE Poll Creation
+**** DONE Step 1
+***** DONE Ask a question
+***** DONE Add a link
+***** DONE Add a file
+***** DONE add thumbnailer for images
+**** DONE Step 2
+***** DONE Answer Functionality
+****** DONE At least 2 answers to activate poll
+***** DONE Answer CSS
+***** DONE Tags Functionality
+****** DONE At least 1 tag to activate poll
+****** DONE Add tags
+****** DONE Suggest tags
+***** DONE Tags CSS
+***** DONE Description Functionality
+***** DONE add videos
+***** DONE Description CSS
+**** DONE Different polling options
+DONE Pollsters can allow users to add their own answers or choose to keep the answers as the original ones he creates
+
+
+**** DONE Username
+**** DONE Email
+**** DONE Password
+**** DONE Confirm password
+
+
+*** DONE User Profile
+**** DONE Show user polls
+**** DONE Show Demographics (u can see it in the edit fields)
+**** DONE Show other things
+
+
+** Core Functionality
+*** DONE Users
+**** DONE User settings
+***** DONE add profile picture
+***** DONE message other users
+***** DONE friend other users
+***** DONE subscribe to polls
+**** DONE Login
+***** DONE basic functionality
+**** DONE Logout
+**** DONE Demographic
+***** NOPE Add name
+***** DONE Add sex
+***** DONE Add birthday
+***** DONE Add country
+***** DONE Add city
+***** DONE Add state
+***** DONE Add zip code
+***** DONE Add phone
+***** DONE Add income
+***** DONE Add ethnicity
+***** DONE Add relationship status
+***** DONE Add political
+****** DONE Ajax suggestions
+***** DONE Add religious
+****** DONE Ajax suggestions
+***** DONE Add about
+***** DONE Add screen name
+***** DONE Add interests
+***** DONE Add music
+***** DONE Add tv
+***** DONE Add books
+***** DONE Add movies
+
+*** DONE Searching
+**** DONE view search results for tag
+
+**** DONE search question, description, etc
+
+*** DONE Charts
+**** DONE Implement Chart Types
+***** DONE Pie chart
+***** DONE Bar chart
+**** DONE Detect Shitty Charts
+***** DONE Too much data
+***** DONE Not enough data
+
+
+
+____________________________________________
+
+

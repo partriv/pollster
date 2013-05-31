@@ -1,0 +1,31 @@
+{% load get_user_pic %}
+
+<div id="poll-lister">
+
+	<div class="paging-info">
+	{% ifequal page_num 1 %}
+	{% else %}
+		<div class='paging-results'>Results: {{ start_index }} - {{ end_index }} of {{ total }} | Page: {{ page_num }} of {{ last_page }}</div>
+	{% endifequal %}	
+	</div>
+	
+	{% for p in polls %}
+		<div class="poll-list-item {% cycle '' '' '' 'last'%}" onclick="window.location='/view-poll/{{ p.poll.url }}/'">
+			<h2>{{ p.poll.question }}</h2>
+			<div class="poll-chart">
+				<img src="{{ p.chart_url }}"/>
+			</div>
+			<div class="votes">
+
+				By <a href="/profile/{{ p.poll.user.username }}/">{{ p.poll.user.username }}</a> <a href="/profile/{{ p.poll.user.username }}/">{{ p.poll.user.id|get_user_pic:"tiny"|safe }}</a>			
+			</div>
+			<div class="user">
+				{{ p.poll.total_votes}} vote{% ifequal p.poll.total_votes 1 %}{% else %}s{% endifequal %}				
+			</div>		
+		</div>
+	{% endfor %}
+	<div class="clear"></div>
+	
+	{% include "base/paging_controls.html" %}
+
+</div>

@@ -1,0 +1,30 @@
+NO PRINT STATEMENTS
+
+Requires
+--------------------------
+Python 2.5 
+Django 1.0.2
+mod_wsgi
+MySQLdb
+django-threadedcomments
+PIL
+cjson (http://pypi.python.org/pypi/python-cjson/1.0.5)
+PyFacebook (http://github.com/sciyoshi/pyfacebook/tree/master)
+
+
+setup apache using the vhost config found in apache/
+
+chmod log.txt file
+permissions on /i/captcha
+permissions on poll-files
+permissions on user-files
+
+=======================
+TEMP INSTALL
+========================
+FACEBOOK CONNECT RELEASE 5/20/2009
+	INSTALL PYFACEBOOK
+	ADD FACEBOOK_ID TO USERDATA
+	UPDATE UPDATE_TRUNK SCRIPT
+	NEXT UPDATE TO SITE REQUIRES CHANGE OF PYTHON PATH FOR POLLSTER PACKAGE RESTRUCTURE! 
+	ALSO RETAIN USER-FILES AND POLL-FILES AND CLEAN OUT COM/

@@ -1,0 +1,11 @@
+{% if error %}
+	<div class="error">{{ error }}</div>
+{% endif %}
+{% if dupe %}
+	<div class="error">That tag is already added!</div>
+{% endif %}
+{% for t in tags %}
+	<div class="prop-list-item">
+		<img onclick="return deletePollTag('{{ t.id }}', '{{ poll.id }}');" class="image-icon" title="Delete this tag" src="/i/icons/cross_sm.png"/>&nbsp;{{ t.name }}
+	</div>
+{% endfor %}

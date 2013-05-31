@@ -1,0 +1,158 @@
+{% extends "base/user_nav.html" %}
+{% load get_user_pic %}
+
+{% block title %}
+	{{ SITE_NAME }} - Edit your profile 
+{% endblock title %}
+
+{% block content %}
+
+<script>
+
+	$(document).ready(function() {
+	  $('#id_work').autocomplete("/profile/search/work/0/");
+	  $('#id_education').autocomplete("/profile/search/education/0/");
+	  $('#id_political').autocomplete("/profile/search/political/0/");
+	  $('#id_religious').autocomplete("/profile/search/religious/0/");
+	  $('#id_interests').autocomplete("/profile/search/interests/1/", {multiple : true}) ;
+	  $('#id_music').autocomplete("/profile/search/music/1/", {multiple : true}) ;
+	  $('#id_tv').autocomplete("/profile/search/tv/1/", {multiple : true}) ;
+	  $('#id_books').autocomplete("/profile/search/books/1/", {multiple : true}) ;
+	  $('#id_movies').autocomplete("/profile/search/movies/1/", {multiple : true}) ;
+	})
+</script>
+
+<div id="profile-edit">
+	
+	<h2>Editing profile for {{  user.username }} {{  user.id|get_user_pic:"big"|safe }}</h2>
+	
+	<form method="POST" action="">
+	<div class="fieldWrapper">
+	{{ form.sex.errors }}
+	    <label for="id_sex">Sex:</label>
+	{{ form.sex }}
+	</div>
+	
+	<div class="fieldWrapper">
+	{{ form.birthday.errors }}
+	    <label for="id_birthday">birthday:</label>
+	{{ form.birthday }}
+	</div>
+	
+	<div class="fieldWrapper">
+	{{ form.country.errors }}
+	    <label for="id_country">country:</label>
+	{{ form.country }}
+	</div>
+	
+	<div class="fieldWrapper">
+	{{ form.city.errors }}
+	    <label for="id_city">city:</label>
+	{{ form.city }}
+	</div>
+	
+	<div class="fieldWrapper">
+	{{ form.state.errors }}
+	    <label for="id_state">state:</label>
+	{{ form.state }}
+	</div>
+	
+	<div class="fieldWrapper">
+	{{ form.zip_code.errors }}
+	    <label for="id_zip_code">Zip code:</label>
+	{{ form.zip_code }}
+	</div>
+	
+	<div class="fieldWrapper">
+	{{ form.phone.errors }}
+	    <label for="id_phone">phone:</label>
+	{{ form.phone }}
+	</div>
+	
+	<div class="fieldWrapper">
+	{{ form.income.errors }}
+	    <label for="id_income">income:</label>
+	{{ form.income }}
+	</div>
+	
+	<div class="fieldWrapper">
+	{{ form.ethnicity.errors }}
+	    <label for="id_ethnicity">ethnicity:</label>
+	{{ form.ethnicity }}
+	</div>
+	
+	<div class="fieldWrapper">
+	{{ form.sexual_orientation.errors }}
+	    <label for="id_sexual_orientation">Sexual_Orientation:</label>
+	{{ form.sexual_orientation }}
+	</div>
+	<div class="fieldWrapper">
+	{{ form.relationship_status.errors }}
+	    <label for="id_relationship_status">Relationship_Status:</label>
+	{{ form.relationship_status }}
+	</div>
+	<div class="fieldWrapper">
+	{{ form.political.errors }}
+	    <label for="id_political">Political:</label>
+	{{ form.political }}
+	</div>
+	<div class="fieldWrapper">
+	{{ form.religious.errors }}
+	    <label for="id_religious">Religious:</label>
+	{{ form.religious }}
+	</div>
+	<div class="fieldWrapper">
+	{{ form.about.errors }}
+	    <label for="id_about">About:</label>
+	{{ form.about }}
+	</div>
+	<div class="fieldWrapper">
+	{{ form.screen_name.errors }}
+	    <label for="id_screen_name">Screen_Name:</label>
+	{{ form.screen_name }}
+	</div>
+	<div class="fieldWrapper">
+	{{ form.screen_name_service.errors }}
+	    <label for="id_screen_name_service">Screen_Name_Service:</label>
+	{{ form.screen_name_service }}
+	</div>
+	<div class="fieldWrapper">
+	{{ form.education.errors }}
+	    <label for="id_education">Education:</label>
+	{{ form.education }}
+	</div>
+	<div class="fieldWrapper">
+	{{ form.work.errors }}
+	    <label for="id_work">Work:</label>
+	{{ form.work }}
+	</div>
+	<div class="fieldWrapper">
+	{{ form.interests.errors }}
+	    <label for="id_interests">Interests:</label>
+	{{ form.interests }}
+	</div>
+	<div class="fieldWrapper">
+	{{ form.music.errors }}
+	    <label for="id_music">Music:</label>
+	{{ form.music }}
+	</div>
+	<div class="fieldWrapper">
+	{{ form.tv.errors }}
+	    <label for="id_tv">Tv:</label>
+	{{ form.tv }}
+	</div>
+	<div class="fieldWrapper">
+	{{ form.books.errors }}
+	    <label for="id_books">Books:</label>
+	{{ form.books }}
+	</div>
+	<div class="fieldWrapper">
+	{{ form.movies.errors }}
+	    <label for="id_movies">Movies:</label>
+	{{ form.movies }}
+	</div>
+	
+	<input type="submit" value="Save">
+	</form>
+</div>
+{% endblock content %}

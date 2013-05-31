@@ -1,0 +1,251 @@
+{% extends "base/tag_nav.html" %}
+
+
+{% block title %}
+	{{ poll.question }} - Pollstruck
+{% endblock title %}
+
+
+{% block content %}
+	{% load get_user_pic %}
+	
+	<script type="text/javascript">
+		$(document).ready(
+			function() {
+				$('#id_new_answer').autocomplete("/view-poll/answer-suggest/?id={{poll.id}}");
+				$('#gallery a').lightBox({
+					overlayBgColor: '#dd5500',
+					overlayOpacity: 0.6,
+					imageLoading: '/images/lightbox-ico-loading.gif',
+					imageBtnClose: '/images/lightbox-btn-close.gif',
+					imageBtnPrev: '/images/lightbox-btn-prev.gif',
+					imageBtnNext: '/images/lightbox-btn-next.gif',
+					containerResizeSpeed: 350,
+					txtImage: 'Imagem',
+					txtOf: 'de'							
+				});			
+			}	    			
+		);
+	</script>
+	 
+	<div id="pollview">	
+		<div id="poll-wrapper">
+		{% if preview %}
+			<div id="poll-preview">
+				You are previewing your poll
+			</div>
+			<div class="edit-your-poll" style="margin-top: 10px; float: left;" onclick="window.location='/create-poll/answers/{{ poll.url }}/'"/>
+				&lt;-&nbsp;Back to editing
+			</div> 
+			<div class="edit-your-poll" style="margin-top: 10px; float: right" onclick="window.location='/create-poll/finish/{{ poll.url }}/'"/>
+				Finish!&nbsp;-&gt;
+			</div>
+			<div class="clear"></div>
+		{% endif %}
+			<div class="question">
+				<!-- google_ad_section_start-->
+				<h1>{{ poll.question }}
+				{% if creator %}
+					{% if preview %}
+					{% else %}
+						<a href="/create-poll/answers/{{ poll.url }}/" alt="Edit your poll" title="Edit your poll"><img src="/i/icons/pencil.png"/></a>
+					{% endif %}
+				{% endif %}		
+				</h1>		
+				<!-- google_ad_section_end -->
+			</div>
+			<div id="poll-chart">
+				{% if noVotes %}
+					<div id="no-votes"><div class="none">No votes yet, be the first!</div></div>			
+				{% else %}
+					<img src="{{ gChart|safe }}"/>
+				{% endif %}
+			</div>
+			
+			
+			<div id="poll-view-left">
+			  <div id="answer-radio-indicator">Casting vote... <img src="/i/dark_blue_sm_indicator.gif"></div>		
+			  <div id="vote-on-answer">	
+				  {% if form %}
+					  <div class="answer-title">Choices</div>					  
+					  <form name="vote_answer_form">
+				    	<input type="hidden" id="poll_id" value="{{ poll.id }}">
+						{% for f in form %}
+							<h4>{{ f }}</h4>
+						{% endfor %}
+					   </form>
+					   {% if poll.allow_user_answers %}
+						  <div class="new-answer">
+							<form method="post" action="/view-poll/new-answer/">
+								Your answer {{ answerForm.new_answer }} 
+							  <input type="submit" value="add it" />
+							  <img onclick="$('#help-pollview-new-answer').slideToggle();" title="Help" class="image-icon" src="/i/icons/help.png"/>
+							  <div id="help-pollview-new-answer">You may not like the answers above, well you can make your own answer and add it to the poll!  You will automatically vote for the answer you add.</div>
+							  <input type="hidden" name="pid" value="{{ poll.id }}" />
+							  <input type="hidden" name="preview" value="{{ preview }}"/>
+							</form>
+						   </div>
+					   {% endif %}
+				 {% else %}				
+					{% include "pollview-results.html" %}				
+				 {% endif %}
+			  </div>
+			</div>		
+			
+				
+			<div id="poll-view-right">
+				{% if poll.link %}
+					<div class="right-block">
+						<div class="domain">
+							<a href="{{ poll.link }}" {% if link_in_new_window %}target="_blank"{% endif %} title="This poll wants to link you somewhere">{{ domain.1 }}</a><img src="/i/icons/external_link.png" title="Link"/>
+						</div>
+					</div>
+				{% endif %}					
+				{% if poll.description %}
+					<div class="right-block">
+						<div class="description">{{ poll.description }}</div>
+					</div>
+				{% endif %}
+				{% if tags %}
+					<div class="right-block">
+						<div class="tags">
+							Tags
+							<!-- google_ad_section_start -->
+							{% for t in tags  %}
+							  	<span class="tag"><a href="/tag/{{ t.name }}/">{{ t.name }}</a></span>
+							{% endfor %}
+							<!-- google_ad_section_end -->
+						</div>
+					</div>
+				{% endif %}
+				
+				<div class="right-block">
+					<span class="username">					 
+						Created by <a href="/profile/{{ poll.user.username }}/">{{ poll.user.username }}</a> on {{ poll.date_created|date:"m/d/Y" }}
+					</span>
+				</div>
+				<div class="right-block"> 			
+					{% if user %}
+					<span id="poll-view-watch-it" class="right-link">
+						{% if watching %}
+						<a title="Stop watching this poll" href="#" onclick="return stopWatchPoll('{{ poll.id }}');">Stop watching this poll</a>
+						{% else %}
+						<a title="Watch this poll" href="#" onclick="return watchPoll('{{ poll.id }}');">Watch this poll</a>
+						{% endif %}
+					</span>		
+					{% endif %}
+						
+					<span class="right-link"><a href="/view-poll/{{ random_poll.url }}/">Go to another poll</a></span>					
+						
+					<span id="flag-inappropriate" class="right-link"><a title="Flag as inappropriate" onclick="return flagInappropriate('{{ poll.id }}');" href="#">Flag as inappropriate</a></span>
+				</div>																	
+			</div>
+
+			<div class="clear"></div>
+			
+		</div>
+		
+		
+		{% comment %}
+			=======================
+			BEGIN COMMENTS SECTION
+			=======================
+		{% endcomment %}	
+		
+		<div id="comments-wrapper">
+			{% load threadedcommentstags %}
+			{% get_threaded_comment_form as form %}
+			 
+			<script type="text/javascript">
+				function show_reply_form(comment_id, url, user, depth) {
+				   var to_add = $( new Array('<div id="new-cmnt-reply-' + comment_id + '" class="response">', 
+					    	'<p>Reply to ' + user + ':</p>',
+						    '<form id="new-comment-reply-thread' + comment_id + '" method="POST" onsubmit=\'return postComment("' + url + '", "new-thread-reply", "' + comment_id + '", ' + depth + ', "{{ user }}", "post-new-comment-indicator-' + comment_id + '");\'>',
+							'{{ form.comment|oneline }}<br/><input type="submit" value="Reply" />',
+						    '</form>','</div>').join(''));
+				    
+				   to_add.css("display", "none");
+	
+				   	var comment_reply = $('#c' + comment_id);			    
+				    comment_reply.after(to_add);
+				    to_add.slideDown(function() {
+				        comment_reply.replaceWith(new Array('<a id="c',
+				        comment_id,'" href="javascript:hide_reply_form(\'',
+				        comment_id, '\',\'', url, '\',\'', user,
+				        '\')">Stop Replying</a>').join(''));
+				    });
+				}
+				function hide_reply_form(comment_id, url, person_name) {
+				    var comment_reply = $('#c' + comment_id);
+				    comment_reply.next().slideUp(function (){
+				        comment_reply.next('.response').remove();
+				        comment_reply.replaceWith(new Array('<a id="c',
+				        comment_id,'" href="javascript:show_reply_form(\'',
+				        comment_id, '\',\'', url, '\',\'', person_name,
+				        '\')">Reply</a>').join(''));
+				    });
+				}
+			</script>
+			
+			{% get_comment_count for poll as comment_count %}
+			<div>
+				<a name="comments"></a>
+				<h5>
+					<span class="comments-count-title">{{ comment_count }}</span> comments
+				</h5>			
+				<div>{% ifequal comment_count 0 %}Be the first to comment!{% endifequal %}</div>
+			</div>	
+		    
+		    {% get_threaded_comment_tree for poll as tree %}
+		    
+		    <div id="threaded-comments">
+		    	
+		    	{% for comment in tree %}
+			    	<div id="comment-{{ comment.id }}">
+				    	<a name="{{ comment.id }}"></a>
+				     	 <div class="comment" style="margin-left: {{ comment.depth }}em;">
+				     	 	<div class="comment-user-pic">
+				     	 		<a href="/profile/{{ comment.user }}/">{{ comment.user.id|get_user_pic:"medium"|safe }}</a>
+				     	 	</div>
+				        	<div class="comment-body"><p>{% auto_transform_markup comment %}</p></div>				        	
+				         	<p class="posted-by">Posted by 
+				         		<a href="/profile/{{ comment.user }}/">{{ comment.user }}</a> &nbsp;
+				         		<a id="c{{ comment.id }}" href="javascript:show_reply_form('{{ comment.id }}', '{% get_comment_url_json poll comment %}','{{ comment.user}}', {{ comment.depth }});">Reply</a>
+				         		<span id="post-new-comment-indicator-{{ comment.id }}" style="display: none;"><img src="/i/dark_blue_sm_indicator.gif"></span> 
+				         		{% ifequal comment.user user %}
+				         			&#183; <a href="#" onclick="return deleteComment('{{ comment.id }}');">Delete</a>
+				         			<span id="del-comment-indicator-{{ comment.id }}" style="display: none;">
+				         				<img src="/i/dark_blue_sm_indicator.gif">
+				         			</span>
+				         		{% else %}
+				         		{% endifequal %}		         		
+				         	</p>
+				         </div>
+			         </div>    
+			         <div id="new-thread-comment-{{ comment.id }}" style="display: none;"></div>
+			         <div class="clear"></div>	             
+				{% endfor %}
+				<div id="new-post-comment" style="display: none;"></div>
+				
+		    </div>
+		    
+			<div id="comment-form">
+				{% if user %}
+					<div class="comments-make-title">Leave a comment</div>
+					<form id="post-new-comment-form" onsubmit="return postComment('{% get_comment_url_json poll %}', 'new-comment', undefined, 0, '{{ user }}', 'post-new-comment-indicator');"  method="POST">
+		           		{{ form.comment }}  
+					  <p class="submit">
+					    <input type="submit" name="post" class="submit-post" value="Post">
+					    <span id="post-new-comment-indicator" style="display: none;"><img src="/i/dark_blue_sm_indicator.gif"></span>
+					  </p>
+					</form>
+				{% else %}
+					Wanna leave a comment?  Why not <a href="#" onclick="return showLoginBlock('comment-form', '/view-poll/{{ poll.url }}/');">login</a>?
+				{% endif %}
+			</div>
+		</div>
+		
+		
+	</div>
+	
+{% endblock content %}

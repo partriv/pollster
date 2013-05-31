@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+	<url>
+	    <loc>http://www.pollstruck.com/</loc>
+	    <lastmod>{{ date|safe }}</lastmod>
+	    <changefreq>daily</changefreq>
+	    <priority>1</priority>
+	</url>
+
+	<url>
+	    <loc>http://www.pollstruck.com/24h/</loc>
+	    <lastmod>{{ date|safe }}</lastmod>
+	    <changefreq>daily</changefreq>
+	    <priority>1</priority>
+	</url>
+
+	<url>
+	    <loc>http://www.pollstruck.com/30d/</loc>
+	    <lastmod>{{ date|safe }}</lastmod>
+	    <changefreq>daily</changefreq>
+	    <priority>1</priority>
+	</url>
+
+	<url>
+	    <loc>http://www.pollstruck.com/all/</loc>
+	    <lastmod>{{ date|safe }}</lastmod>
+	    <changefreq>daily</changefreq>
+	    <priority>1</priority>
+	</url>
+	
+	<url>
+	    <loc>http://www.pollstruck.com/tag/</loc>
+	    <lastmod>{{ date|safe }}</lastmod>
+	    <changefreq>daily</changefreq>
+	    <priority>0.8</priority>
+	</url> 
+
+	{% for title, link in urls %}
+	<url>
+	    <loc>{{ link|safe }}</loc>
+	    <lastmod>{{ date|safe }}</lastmod>
+	    <changefreq>daily</changefreq>
+	    <priority>0.8</priority>
+	</url> 	
+	{% endfor %}
+
+	<url>
+	    <loc>http://www.pollstruck.com/sitemap/</loc>
+	    <lastmod>{{ date|safe }}</lastmod>
+	    <changefreq>daily</changefreq>
+	    <priority>0.8</priority>
+	</url> 
+
+</urlset>

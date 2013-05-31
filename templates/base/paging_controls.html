@@ -1,0 +1,25 @@
+<div id="paging">
+{% if has_other_pages %}
+	{% if has_previous %}
+		{% ifequal previous_page_number 1 %}
+		{% else %}
+		<span class="page-num"><a href="{{ page_link_prefix }}/1/"> &lt;&lt; </a></span>&nbsp;
+		{% endifequal %}
+		<span class="page-num"><a href="{{ page_link_prefix }}/{{ previous_page_number }}/"> &lt;</a></span>
+	{% endif %}
+	{% for i in paginator.page_range %}
+		{% ifequal page_num i %}
+			<span class="page-num-selected">{{ i }}</span>&nbsp;
+		{% else %}
+			<span class="page-num"><a href="{{ page_link_prefix }}/{{ i }}/">{{ i }}</a></span>&nbsp;			
+		{% endifequal %}
+	{% endfor %}
+	{% if has_next %}
+		<span class="page-num"><a href="{{ page_link_prefix }}/{{ next_page_number }}/"> &gt; </a></span>
+		{% ifequal next_page_number last_page %}
+		{% else %}
+		&nbsp;<span class="page-num"><a href="{{ page_link_prefix }}/{{ last_page }}/"> &gt;&gt; </a></span>
+		{% endifequal %}
+	{% endif %}
+{% endif %}
+</div>

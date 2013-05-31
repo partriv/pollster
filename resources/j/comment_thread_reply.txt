@@ -1,0 +1,1 @@
+[{"pk": 48, "model": "threadedcomments.threadedcomment", "fields": {"comment": "test!!", "is_approved": false, "parent": 46, "date_modified": "2009-04-03 14:27:57", "markup": 5, "date_submitted": "2009-04-03 14:27:57", "object_id": 47, "user": 63, "content_type": 8, "is_public": true, "ip_address": "127.0.0.1", "date_approved": null}}]

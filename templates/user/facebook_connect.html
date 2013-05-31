@@ -1,0 +1,50 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+
+<div id="facebook-connect">
+	
+	Hello  <fb:name uid="{{ fb.users.getLoggedInUser }}" useyou="false" ></fb:name>
+	<div>
+		<fb:profile-pic uid="{{ fb.users.getLoggedInUser }}" linked="false" ></fb:profile-pic>
+	</div>
+	
+	
+	{% if login_block %}
+		It looks like you already have a Pollstruck acocunt, please login with that!
+		{% include "login_block.html" %}
+	{% else %}	
+		Thanks for logging in via Facebook Connect, since it looks like you've never done this before we just have two little things to ask you, please pick a:
+		<br/><br/>
+		<form id="fbregister" name="fbregisterfrm" action="/facebook-connect/" method="POST">	
+			<div class="error">
+				{{ form.username.errors }}
+				{{ user_error }}
+			</div>
+			<span class="label">Username&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> {{ form.username }} <span id="usermatch"></span>
+			<br/>	
+			<div class="help-username">{{ form.username.help_text }}</div>
+			<br/>
+			
+			<div class="error">
+				{{ form.email.errors }}
+				{{ email_error }}
+			</div>
+			<span class="label">Email address</span> {{ form.email }}
+			<div class="blue-box">Pollstruck will never sell/give/show/whisper your email address to anyone else, ever.  We fully comply with Facebook terms of service and privacy policiy and have a similar one of our own (<a href="/tos/" target="_blank">TOS</a>).</div>
+			
+			<div class="connect-user">
+				<div class="error_go small-text"></div>If you already have a Pollstruck account,  you should login with that first so you can link your Pollstruck account with your Facebook account. <a href="/login/">Login Here</a>
+				<span class="small-grey-text">(If you don't have a Pollstruck account, you can just click the button below.)</span>
+			</div>
+			
+			
+			<input type="submit" value="Thanks!"/>
+		</form>
+		
+	{% endif %}
+	
+	{# <fb:prompt-permission perms="status_update"> Grant permission for status updates </fb:prompt-permission> #}
+
+</div>
+{% endblock content %}

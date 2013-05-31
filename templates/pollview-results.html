@@ -1,0 +1,11 @@
+
+<div class="answer-title">Total votes <span class="vote-count">{{ poll.total_votes }}</span></div>
+
+<div id="poll-results">
+	<div class="results-box"> 
+		{% include "pollview/pollview-answer-lister.html" %}		
+	</div>		
+</div>
+
+<div class="your-answer">You answered <span class="answer">{{ your_answer }}</span></div>
+

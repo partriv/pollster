@@ -1,0 +1,12 @@
+This is the pollster readme.
+
+Database is synced up to use django user middleware.
+
+3/24/09
+---------
+To use open flash chart python json lib you must install cjson
+
+4/10/2009
+---------
+Python Image Lib is now required for the image resizer during poll creation
+poll files dir requires 'view_thumb' and 'home_thumb' sub dirs to exist for those thumbnail types

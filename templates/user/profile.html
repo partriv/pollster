@@ -1,0 +1,139 @@
+{% extends "base/user_nav.html" %}
+{% load get_user_pic %}
+
+{% block title %}
+	{{ user_for_profile.username }}'s Profile - 
+	{% if owner %}
+		{% ifequal class 'index-view' %}Your polls{% endifequal %}
+		{% ifequal class 'voted-on-view' %}You voted on{% endifequal %}
+		{% ifequal class 'finished-view' %}You have finished{% endifequal %}
+		{% ifequal class 'not-finished-view' %}You have not finished{% endifequal %}
+		{% ifequal class 'created-view' %}You have created{% endifequal %}
+		{% ifequal class 'commented-view' %}You commented on{% endifequal %}
+	{% else %}
+		{{ user_for_profile.username }}
+		{% ifequal class 'index-view' %}'s polls{% endifequal %}
+		{% ifequal class 'voted-on-view' %} voted on{% endifequal %}
+		{% ifequal class 'commented-view' %} commented on{% endifequal %}
+		
+		
+		
+	{% endif %} - Pollstruck
+{% endblock title %}
+
+{% block content %}
+<div id="user-profile">
+	<div id="user-heading">
+		<div class="user-info">
+			{{ user_for_profile.id|get_user_pic:"big"|safe }}
+			<span class="user-name"><a href="/profile/{{ user_for_profile.username }}/">{{ user_for_profile.username }}</a></span>
+			<span class="stat">
+				Created <span class="value"><a href="/profile/{{ user_for_profile.username }}/created/">{{ user_polls_count }}</a></span> polls
+			</span>
+			<div class="stat">
+				Created <span class="value"><a href="/profile/{{ user_for_profile.username }}/created/">{{ user_polls_percent|floatformat }}%</a></span> of all polls
+			</div>
+			<div class="stat">
+				Made <span class="value"><a href="/profile/{{ user_for_profile.username }}/commented/">{{ user_comments_count }}</a></span> comments across <span class="value"><a href="/profile/{{ user_for_profile.username }}/commented/">{{ user_poll_comments }}</a></span> polls 
+			</div>
+			<div class="stat">
+				Voted on <span class="value"><a href="/profile/{{ user_for_profile.username }}/voted-on/">{{ user_votes_count }}</a></span> polls or <span class="value"><a href="/profile/{{ user_for_profile.username }}/voted-on/">{{ user_votes_percent|floatformat }}%</a></span> of all polls
+			</div>
+		</div>
+		
+		<div class="user-edit">
+			{% if owner %}
+				<div class="user-edit-photo"><a href="/profile/{{ user_for_profile.username }}/pic/">Add/change your profile picture</a></div>
+				<div class="user-edit-profile"><a href="/profile/{{ user_for_profile.username }}/edit/">Edit your profile</a></div>
+				<div class="user-edit-settings"><a href="/profile/{{ user_for_profile.username }}/settings/">Edit your settings</a></div>
+				<div class="user-edit-mail">{% if newMail %}New Mail - {% endif %}<a href="/profile/{{ user_for_profile.username }}/mail/view/">View your mail</a></div>
+				<div class="user-edit-settings"><a href="/profile/{{ user_for_profile.username }}/change-password/">Change your password</a></div>			
+			{% else %}
+				<div class="user-mail"><img src="/i/icons/email_edit.png"/><a href="#" onclick="$('#profile-message-form').fadeIn(); $('#profile-message-sent').hide(); return false;">Message {{ user_for_profile.username }}</a></div>
+				<div id="user-friend">
+					{% if friend %}
+					You are friends
+					{% else %}
+					<img src="/i/icons/user_add.png"/><a href="#" onclick="return friendUser('{{ user_for_profile.id }}');">Friend {{ user_for_profile.username }}</a>
+					{% endif %}
+				</div>
+			{% endif %}
+		</div>
+	</div>
+
+	<div id="profile-message-form">
+		<h4>Sending a message to {{ user_for_profile.username }}</h4>
+		
+		<div class="message-field">Subject: {{ messageForm.subject }}</div>
+		<div class="message-field">{{ messageForm.body }}</div>
+		<a href="#" onclick="return mailUser('{{ user_for_profile.username }}');">Send</a>&nbsp;&nbsp;<a href="#" onclick="$('#profile-message-form').fadeOut('fast');">Cancel</a>
+		<span id="profile-message-send" style="display: none;">&nbsp;Sending&nbsp;<img src="/i/dark_blue_sm_indicator.gif"></span>
+		
+	</div> 
+	<div id="profile-message-sent" style="display: none;"></div>
+
+	{% for v in votedOn %}
+	<div>{{ v.poll.question }}</div>
+	{% endfor %}
+	<div class="control-bar">
+		<span{% ifequal class 'voted-on-view' %} class="selected"{% endifequal %}> 
+			<a href="/profile/{{ user_for_profile.username }}/">Voted On</a>
+		</span>  
+
+		<span{% ifequal class 'watch-view' %} class="selected"{% endifequal %}>
+			<a href="/profile/{{ user_for_profile.username }}/watching/">Watching</a>
+		</span>
+
+		<span{% ifequal class 'created-view' %} class="selected"{% endifequal %}>
+			<a href="/profile/{{ user_for_profile.username }}/created/">Created</a>			
+		</span>
+		<span {% ifequal class 'commented-view' %}class="selected"{% endifequal %}>
+			<a href="/profile/{{ user_for_profile.username }}/commented/">Commented On</a>			
+		</span>		
+		<span{% ifequal class 'activity-feed' %} class="selected"{% endifequal %}>
+			<a href="/profile/{{ user_for_profile.username }}/activity/">Activity</a>
+		</span>		
+		{% if owner %}
+			<span{% ifequal class 'not-finished-view' %} class="selected"{% endifequal %}>
+				<a href="/profile/{{ user_for_profile.username }}/not-finished/">Inactive</a>
+			</span>
+		{% endif %}
+	</div>
+	
+	
+	{% if polls %}
+		{% include "base/poll_main_list.html" %}
+	{% else %}		
+		{% ifequal class 'voted-on-view' %}
+			<div class="profile-none-found">You haven't voted on any polls yet!  You should go <a href="/view-poll/">vote on some</a>.</div>		
+		{% endifequal %}		
+		{% ifequal class 'watch-view' %}
+			<div class="profile-none-found">You aren't watching any polls yet!  Watch any poll you're interested in.</div>
+		{% endifequal %}		
+		{% ifequal class 'finished-view' %}
+			<div class="profile-none-found">You haven't created any new polls yet!  You should go make some.</div>
+		{% endifequal %}		
+		{% ifequal class 'not-finished-view' %}
+			<div class="profile-none-found">Sometimes you may forget to complete a poll, that's ok, you'll find it here.</div>
+		{% endifequal %}		
+	{% endif %}
+	
+	{% if activity %}
+		<div id="activity">
+			{% include "user/profile-activity-lister.html" %}
+		</div>		
+		<div id="activity-more-btn" {% if remain %}onclick="return getMoreActivity('{{user_for_profile.username}}');"{% else %}{% endif %}>More stuff! &darr;<span id="more-activity-indicator" style="display: none;"><img src="/i/dark_blue_sm_indicator.gif"></span></div>
+		{% if remain %}
+		{% else %}
+			<script type="text/javascript">
+  				$('#activity-more-btn').text("Looks like there's nothing left!");
+  				$('#activity-more-btn').css({'cursor':'default', 'background-color':'#024997', 'color':'#fff'});
+			</script>
+		{% endif %}						
+		<input id="activity-phase-count" type="hidden" value="1"/>
+	{% endif %}
+	
+	
+</div>
+	
+{% endblock content %}

@@ -1,0 +1,79 @@
+{% load get_user_pic %}
+<div class="activity-item">
+	 
+	 
+	 
+ 	<div class="activity-user">
+ 		<a href="/profile/{{ item.related_user.username }}/" alt="{{ item.related_user.username }}" title="{{ item.related_user.username }}">
+			{{ item.related_user.id|get_user_pic:"medium"|safe }}
+		</a> 
+	</div>	
+ 	<div class="activity-item-content">	
+ 		<div class="activity-heading">
+
+ 			<span class="related-user">
+ 				<a href="/profile/{{ item.related_user }}/">{% ifequal item.related_user user %}You{% else %}{{ item.related_user }}{% endifequal %}</a>
+ 			</span>
+ 			
+		 	{% ifequal item.type 'created' %}
+		 		created a new poll <a href="/view-poll/{{ item.poll.url }}/">{{ item.poll.question }}</a>
+		 	{% endifequal %}
+		 	{% ifequal item.type 'comment' %}				
+				commented on 
+				{% if item.user_related and owner %}
+				your
+				{% else %}
+					<span class="related-user"><a href="/profile/{{ item.poll.user.username }}/">{{ item.poll.user.id|get_user_pic:"tiny"|safe }}</a><a href="/profile/{{ item.poll.user.username }}/">{{ item.poll.user.username }}</a>'s</span>
+				{% endif %}
+				poll 
+				<span class="question"><a href="/view-poll/{{ item.poll.url }}/">{{ item.poll.question }}</a></span>														
+			{% endifequal %}
+			{% ifequal item.type 'vote' %}
+				voted on 
+				{% if item.user_related and owner %}
+				your
+				{% else %}
+					<span class="related-user"><a href="/profile/{{ item.poll.user.username }}/">{{ item.poll.user.id|get_user_pic:"tiny"|safe }}</a><a href="/profile/{{ item.poll.user.username }}/">{{ item.poll.user.username }}</a>'s</span>
+				{% endif %} 
+				poll 
+				<span class="question"><a href="/view-poll/{{ item.poll.url }}/">{{ item.poll.question }}</a></span>
+			{% endifequal %}
+		 </div>
+				 	
+
+		{% ifequal item.type 'comment' %}				
+			<div class="content-holder"><span class="content">&quot;{{ item.comment.comment }}&quot;</span></div>
+		{% endifequal %}
+				 	
+		{% ifequal item.type 'vote' %}
+			<div class="content-holder">Answer: <span class="content">{{ item.vote.poll_answer.answer }}</span></div>
+		{% endifequal %}
+	</div>
+	
+	
+	<div class="activity-icons">
+	 	{% if item.user_related %}
+	 		<img src="/i/icons/house.png" title="This is {% if owner %}your {% else %}{{ item.poll.user.username }}'s {% endif %}poll" alt="Your poll"/>
+	 	{% endif %}			
+	 	{% if item.friend_related %}
+	 		<img src="/i/icons/user_orange.png" title="{% ifequal user.username item.related_user.username %}You and {{ user_for_profile.username }} are friends.{% else %}{% if owner %}You are{% else %}You and {{ user_for_profile.username }} are{% endif %} friends with {{ item.related_user }}{% endifequal %}" alt="Friends"/>
+	 	{% endif %}
+	 	{% if item.watching_related %}
+	 		<img src="/i/icons/chart_pie.png" title="{% if owner %}You are{% else %}{{ user_for_profile.username }} is{% endif %} watching this poll" alt="Watching"/> 
+	 	{% endif %}
+		{% if item.user_voted %}
+	 		<img src="/i/voted-check-mini.gif" title="{% if owner %}You {% else %}{{ user_for_profile.username }} {% endif %}voted on this" alt="Voted"/> 
+	 	{% endif %}
+		{% if item.friend_voted %}
+	 		<img src="/i/voted-check-mini.gif" title="{{ item.related_user }} voted on this" alt="Voted"/> 
+	 	{% endif %}	 			 			 	
+		{% if item.user_commented %}
+	 		<img src="/i/icons/comment.png" title="{% if owner %}You {% else %}{{ user_for_profile.username }} {% endif %}commented on this" alt="Commented"/> 
+	 	{% endif %}
+		{% if item.friend_commented %}
+	 		<img src="/i/icons/comment.png" title="{{ item.related_user }} commented on this" alt="Commented"/> 
+	 	{% endif %}	 
+	 	<span class="time">{{ item.date|timesince }} ago</span>		 	
+	</div>	 
+ 			 	
+ </div>

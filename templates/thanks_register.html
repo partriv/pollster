@@ -1,0 +1,14 @@
+{% extends "base/base.html" %}
+
+{% block title %}
+	{{ SITE_NAME }} - Thanks for registering 
+{% endblock title %}
+
+
+{% block content %}
+	<div class="register-thanks">
+		Thanks for registering!  You are now logged in. <br/><br/>
+		You may want to <a href="/profile/{{ user.username }}/">update your profile</a> a bit by adding a picture and maybe some more info.<br/><br/>
+		Or you can continue to the <a href="/">home page</a>
+	</div>
+{% endblock content %}

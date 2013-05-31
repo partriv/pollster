@@ -1,0 +1,54 @@
+{% extends "base/base.html" %}
+{% load get_user_pic %}
+{% block content %}
+	{# CONTENT #}
+{% endblock content %}
+
+{% block sidebar %}
+	<div class="user-side-nav">
+		<div class="side-nav-wrapper">
+			<div class="advertisement">
+				<div class="ad-text">Advertisement</div>
+				{{ med_square_ad|safe }}
+			</div>
+		</div>	
+		<div class="side-nav-wrapper">
+			<div class="user-side-nav-poll">
+				<h2>{% if owner %}You are{% else %}{{ user_for_profile.username }} is{% endif %} watching</h2>
+					{% if mini_polls %}					
+						{% include "base/poll_mini_lister.html" %}
+						{% if more_watched %}
+							<div style="margin-bottom: 15px"><a href="/profile/{{ user.username }}/watching/" title="See more">More</a></div>
+						{% endif %}
+					{% else %}
+						You aren't watching any polls!
+					{% endif %}
+			</div>		
+		</div>
+	
+		<div class="side-nav-wrapper">
+			<div class="advertisement">
+				<div class="ad-text">Advertisement</div>
+				{{ med_square_ad|safe }}
+			</div>
+		</div>
+		<div class="side-nav-wrapper">		
+			<div class="user-side-nav-tag">
+				<h2>{% if owner %}Your{% else %}{{ user_for_profile.username }}'s{% endif %} friends</h2>
+					{% if friends %}
+						{% for f in friends %}
+							<span class="profile-friend-image"><a href="/profile/{{ f.username}}/" title="{{ f.username}}">{{ f.id|get_user_pic:"medium"|safe }}</a></span>
+						{% endfor %}
+					{% else %}
+						{% if owner %}
+						You don't have any friends yet,  you should go make some!
+						{% endif %}
+					{% endif %}
+			</div>
+		</div>		
+
+		
+	</div>
+	
+	
+{% endblock sidebar %}

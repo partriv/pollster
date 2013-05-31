@@ -1,0 +1,8 @@
+{% ifequal len 0 %}
+	No Matches
+{% else %}
+	Polls created by other people!<br/>
+	{% for p in polls %}
+		- {{ p.question }}<br/>
+	{% endfor %}
+{% endifequal %}

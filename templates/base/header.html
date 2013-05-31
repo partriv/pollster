@@ -1,0 +1,71 @@
+{% load get_user_pic %}
+
+<div class="mast">
+	<div class="head-top">
+		
+		{% if pollview %}
+			<div class="logo"><a href="/" title="Click for Home">Pollstruck</a></div>			
+		{% else %}
+			<h1><a {% if home %}style="cursor: default;" {% endif %}href="/" title="Click for Home">Pollstruck</a></h1>
+		{% endif %}
+
+		<div class="head-search">
+		
+
+			<input id="searchBox" type="text" autocomplete="off" value="Search..." onfocus="return focusHeaderSearchBox();" onblur="return focusHeaderSearchBox('reset');" onkeyup="return headerSearchHandler(event);"/>
+		</div>
+		<div class="clear"></div>
+		
+	</div>
+	
+	<div class="head-mid">
+		<span class="head-create"><a href="/" title="Home">Home</a></span>
+		<span class="head-create"><a href="/create-poll/" title="Create a new poll">Create a Poll</a></span>
+		<!--  <span class="head-create"><a href="/top/" title="Top 20 Polls">Top 20 Polls</a></span>  -->
+		{% if user.is_authenticated %}
+			<span class="head-login" title="Logout"><a href="/logout/">Logout</a></span>
+			{% if user.userdata_set.all.0.facebook_id %}
+			{% else %}
+				<span class="fb-btn" title="Connect with Facebook">
+					<fb:login-button size="small" background="dark" length="short" onlogin="window.location = '/facebook-login/?next={% if next %}{{ next }}{% endif %}';"></fb:login-button>
+				</span>
+			{% endif %}
+		{% else %}
+			<span class="head-home"><a href="/login/" title="Login">Login</a></span>
+			<span class="head-view"><a href="/register/" title="Register">Register</a></span>
+			<span class="fb-btn" title="Connect with Facebook">
+				<fb:login-button size="small" background="dark" length="short" onlogin="window.location = '/facebook-login/?next={% if next %}{{ next }}{% endif %}';"></fb:login-button>
+			</span>			
+		{% endif %}		
+
+			{% if user.is_authenticated %}
+				<span class="head-user"> 
+					
+					
+					{% if newMail %}
+					<span class="mail">
+						<a href="/profile/{{ user.username }}/mail/view/">	
+							<img src="/i/icons/email.png" alt="New messages" title="You have new messages"/>						
+						</a>						
+					</span>
+					{% endif %}
+					
+					 
+					<span class="user-img">
+						<a href="/profile/{{ user.username }}/">{{ user.username }}</a>
+						<a href="/profile/{{ user.username }}/">{{ user.id|get_user_pic:"small"|safe }}</a>
+						
+						
+					</span>
+					
+				</span>			
+			{% endif %}
+		
+				
+		
+			
+	</div>
+	
+</div>
+
+

@@ -1,0 +1,86 @@
+{% load get_user_pic %}
+<div id="poll-listing">
+	{% if polls %}
+	
+		{% if home %}
+			{% ifequal page_num 1 %}
+			{% else %}
+				<div style="margin-bottom: 10px; color:gray;">Results: {{ start_index }} - {{ end_index }} of {{ total }} | Page: {{ page_num }} of {{ last_page }}</div>
+			{% endifequal %}
+		{% else %}
+			<div style="margin-bottom: 10px; color:gray;">Results: {{ start_index }} - {{ end_index }} of {{ total }} | Page: {{ page_num }} of {{ last_page }}</div>
+		{% endif %}
+	
+		{% for p, file, more_pics, tags, domain, voted, icons, data, watching in polls %}	
+		<div class="poll-listings">
+			{% if file %}	
+			<div class="poll-thumb">
+				<a href="/view-poll/{{ p.url }}/"><img src="{{ POLL_FILES_URL }}home_thumb/{{ file }}" alt="{{ file }} thumb"/></a>
+			</div>
+			{% endif %}
+			<div class="poll-info">
+				<div class="poll-link">
+					{% if voted %}<div class="voted-check" title="You voted on this"></div>{% endif %}
+					<!-- google_ad_section_start -->
+					<div>
+						<a href="/view-poll/{{ p.url }}/">{{ p.question }}</a>
+						{% if watching %}
+						<span class="poll-watch">
+							<span id="poll-watch-{{ p.id }}">								
+									<a href="#" onclick="return stopWatchPoll('{{ p.id }}', 'poll-watch-{{ p.id }}');" title="You are watching this poll.  Click here to stop watching it."><img src="/i/icons/chart_pie_delete.png"/></a>								
+							</span>
+						</span>
+						{% endif %}
+						<span class="poll-icons">
+							{% ifequal more_pics 1 %}<img src="/i/icons/image.png" title="This poll has a pic"/>{% endifequal %}
+							{% ifequal more_pics 2 %}<img src="/i/icons/pictures.png" title="This poll has more pictures"/>{% endifequal %}
+							{% if p.video_link %}<img src="/i/icons/film.png" title="This poll has a video"/>{% endif %}
+						</span>											
+					</div>
+					
+					{% if p.link %}
+						<div class="poll-ext-link">
+							<a href="{{ p.link }}" target="_blank" title="Link to {{ p.link }}"><img src="/i/icons/link.png" title="This poll has a link"/>{% if domain %}{{ domain }}{% else %}{{ p.link }}{% endif %}</a>
+						</div>
+					{% endif %}
+					
+					<!-- google_ad_section_end -->
+
+				</div>
+				{% if p.description %}
+				<div class="poll-description">
+					<!-- google_ad_section_start -->					
+					<h3>
+						{{ p.description }}
+					</h3>
+					<!-- google_ad_section_end -->
+				</div>
+				{% endif %}
+				<div class="poll-bar">
+
+					 &#183;&nbsp;<span class="poll-count">{{ p.total_votes}} vote{% ifequal p.total_votes 1 %}{% else %}s{% endifequal %}</span>&nbsp;&#183; 
+					 <span class="comment-count"><a href="/view-poll/{{ p.url }}/#comments">{{ p.total_comments }} Comment{% ifequal p.total_comments 1 %}{% else %}s{% endifequal %}</a></span> &#183; 
+					 <span class="user-label">
+					 	Posted by <a href="/profile/{{ p.user.username }}/">{{ p.user.username }}</a> <a href="/profile/{{ p.user.username }}/">{{ p.user.id|get_user_pic:"tiny"|safe }}</a>
+					 </span> on <span class="posted-date">{{ p.date_created|date:"m/d/y" }}</span>
+				</div>
+				<div class="poll-tags">
+					{% if tags %}
+					<span class="poll-tags-icon"><img src="/i/icons/tag_orange.png" title="Tags"/></span>
+					<!-- google_ad_section_start --> 
+					{% for t in tags %}
+						<span><a href="/tag/{{ t.name }}/" title="Tag: {{ t.name }}">{{ t.name }}</a></span>{% if forloop.last %}{% else %}, {% endif %}
+					{% endfor %}
+					<!-- google_ad_section_end -->
+					{% endif %}
+				</div>				
+			</div>
+		</div>
+		{% endfor %}
+
+		{% include "base/paging_controls.html" %}
+	
+	{% else %}
+		
+	{% endif %}
+</div>

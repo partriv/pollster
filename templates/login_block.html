@@ -1,0 +1,57 @@
+<div id="login-block">
+
+	<h1>Login</h1> or <div class="register"><a href="/register/{% if next %}?next={{ next}}{% endif %}">Register</a></div>
+	<div class="clear"></div>  
+  
+  {% if form.errors %}
+	  <p>Your username and password didn't match or don't exist. Please try again.</p>
+  {% endif %}  
+  
+  <div id="login-form">
+	  <form method="post" action="/login/">
+	    <table>
+	    <tr>
+		    <td></td>
+		    <td>
+		    	{% if errors %}
+	  				<div class="error small-text">{{ errors }}</div>
+	  			{% endif %}
+	  		</td>
+	    </tr>
+	      <tr>
+		<td>{{ form.username.label_tag }}</td>
+		<td>{{ form.username }}</td>
+	      </tr>
+	      <tr>
+		<td>{{ form.password.label_tag }}</td>
+		<td>{{ form.password }}</td>
+	      </tr>
+	    </table>
+	    
+	    <input type="submit" value="login" />
+	    <input type="hidden" name="next" value="{{ next }}" />
+	  </form>
+   </div>
+   {% if no_facebook %}
+   {% else %}
+	  <div id="fb-login-btn"> 	  	
+	  	<fb:login-button size="large" background="white" length="long" onlogin="window.location = '/facebook-login/?next={% if next %}{{ next }}{% endif %}';"></fb:login-button>	  	   
+	  </div>
+	    
+	  <div class="clear"></div>
+
+  {% endif %}
+  <div class="register">
+  	<a href="#" onclick="return forgotIt('user');">Forgot your username?</a> | 
+  	<a href="/forgotpassword/" onclick="return forgotIt('pass');">Forgot your password?</a>
+  	<div id="id_forgot_it" style="display: none;">
+  		Enter your email address <input type="text" id="id_forgot_it_input" style="width: 250px;"/>
+  		<div id="forgot_user" style="display: none;"><a href="#" onclick="return forgotUser();">Send username</a></div>
+  		<div id="forgot_pw" style="display: none;"><a href="#" onclick="return forgotPassword();">Reset password</a></div>
+  	</div>
+  </div>
+</div>
+
+<script type="text/javascript"> 
+	FB.init("{{ FACEBOOK_API_KEY }}", "/xd_receiver.htm"); 
+</script>

@@ -1,0 +1,51 @@
+{% load get_user_pic %}
+<div class="side-nav">
+		
+		<div class="side-nav-wrapper">
+			<div class="side-nav-poll">
+				<h2>{{ side_nav_top_title }}</h2>
+				{% if tag_cloud %}
+					{% for name, fontsize in tag_cloud %}
+		       			<span class="side-tag"><a href='/tag/{{ name }}/' style="font-size: {{ fontsize }}px;">{{ name }}</a></span>&nbsp;
+		    		{% endfor %}
+		    	{% endif %}
+		    	{% if mini_polls %}
+		    		{% include "base/poll_mini_lister.html" %}
+	    		{% endif %}
+			</div>
+		</div>
+				
+		<!-- 
+		<div class="side-nav-wrapper">
+			<div class="advertisement">
+				<div class="ad-text">Advertising</div>
+				{{ med_square_ad|safe }}
+			</div>
+		</div>
+		 -->
+		 
+		<div class="side-nav-wrapper">
+			
+				{% if userdata_list %}
+					<h2>{{ side_nav_bottom_title }}</h2>
+					{% for e in userdata_list %}
+						<span class="side-users">
+							<a href="/profile/{{ e.user.username }}/" title="{{ e.user.username }}">
+								{{ e.user.id|get_user_pic:"medium"|safe }}
+							</a>
+						</span>
+						
+					{% endfor %}
+				{% endif %}	
+				
+				{% if nav_tags %}
+					<div class="side-nav-tag">
+						<h2>{{ side_nav_bottom_title }}</h2>
+						{% for t in nav_tags %}
+							<p><a href="/tag/{{ t.name }}/">{{ t.name }} ({{ t.poll_count }})</a></p>
+						{% endfor %}
+					</div>
+				{% endif %}				
+			
+		</div>
+</div>

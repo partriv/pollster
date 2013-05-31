@@ -1,0 +1,163 @@
+{% extends "base/generic_2_col.html" %}
+
+{% block title %}
+	{{ SITE_NAME }} Poll Creator - {{ poll.question }} 
+{% endblock title %}
+
+{% block content %}
+    <div id="poll-create-answers">
+
+		<div class="create-head">
+			<div class="poll-title">
+				{% if edit_mode %}
+					<div class="poll-title-poll">
+						<div id="poll-question">{{ poll.question }}</div>
+					</div>
+				{% else %}
+					<div class="poll-title-poll" style="cursor: text;" onclick="$('.poll-title-poll').hide();$('.poll-title-edit').show();$('#poll-editor').focus();return false;">
+						<span id="poll-editable-title">{{ poll.question }}</span>&nbsp;<a href="#"><img src="/i/icons/pencil.png"/></a>
+					</div>
+					<div class="poll-title-edit" style="display: none;" >
+						<input id="poll-editor" type="text" value="{{ poll.question }}" onkeyup="return titleEditKeyHandler(event, {{ poll.id }});"  maxlength="75" onblur="return saveCreatorTitle('{{ poll.id }}');"/>
+						<a href="#" onclick="return saveCreatorTitle('{{ poll.id }}');"><img src="/i/icons/disk.png"/></a>
+					</div>
+				{% endif %}
+				
+			</div>
+
+		</div>
+		
+		<div class="create-left">
+			<div class="create-box">
+				{% if errors.answer_error %}
+					<div class="error">{{ errors.answer_error }}</div>
+				{% endif %}
+				<h2>Answers</h2>
+				{% if edit_mode %}
+				{% else %}
+					
+					  		 
+					<div class="resp-field">
+						<input id="id_answer" type="text" maxlength="150" onkeyup="return addAnswerKeyHandler(event, '{{ poll.id }}');"/> 
+						<a href="#" onclick="return addAnswer('{{poll.id}}');"><img src="/i/icons/add.png"/></a>
+						<span class="blue_sm_i_answer"><img src="/i/dark_blue_sm_indicator.gif"></span>						
+					</div>
+				{% endif %}
+				<div class="prop-lists">
+					<div id="poll-answers" {% if answers %}{% else %}style="display:none;"{% endif %}>
+					{% include "ajax/poll_answers.html" %}
+					</div>
+				</div>
+			</div>
+			
+			<div class="create-box">
+				{% if errors.tag_error %}
+					<div class="error">{{ errors.tag_error }}</div>
+				{% endif %}
+				<h2>
+					Tags
+				</h2>											 
+				<div class="resp-field">
+					<input id="id_tag" type="text" maxlength="70" autocomplete="off" onkeyup="return addTagKeyHandler(event, '{{ poll.id }}');"/> 
+					<a href="#" onclick="return addTag('{{poll.id}}');"><img src="/i/icons/add.png"/></a>
+					<span class="blue_sm_i_tag"><img src="/i/dark_blue_sm_indicator.gif"></span>
+				</div>
+				<div class="prop-lists">
+					<div id="poll-tags" {% if tags %}{% else %}style="display:none;"{% endif %}>
+					{% include "ajax/list_poll_tags.html" %}
+					</div>
+				</div>
+			</div>
+
+		
+			
+		</div>
+		
+		
+
+		
+		<div class="create-right">
+
+			<form method="post" action="/create-poll/finish/{{ poll.url }}/">
+			
+				<div class="create-box">
+					<div class="link">
+						<h2>{{ form.link.label }}</h2> {{ form.link }}<div class="error">{{ form.link.errors }}</div>
+					</div>
+				</div>
+				
+				
+				<div class="create-box">
+					<div class="desc">
+						<h2>Description </h2>
+						<div class="error">{{ form.description.errors.0 }}</div>						
+						<div class="poll-create-description">{{ form.description }}</div>
+						<div id="poll-create-desc-char-count">(400 chars left)</div>									
+					</div>
+				</div>
+
+				{% if edit_mode %}
+				{% else %}
+					<div class="create-box">
+						<div class="allow-user-answer">
+							<h2>Allow users to add answers</h2>					
+							<label for="id_allow_user_answers_0">
+								<input id="id_allow_user_answers_0" type="radio" name="allow_user_answers" onclick="return setAllowUserAnswer('{{ poll.id }}', '1');" value="True" {% if allow_user_answers %}checked{% endif %}/>
+								Yes
+							</label>
+							<label for="id_allow_user_answers_1">
+								<input id="id_allow_user_answers_1" type="radio" name="allow_user_answers" onclick="return setAllowUserAnswer('{{ poll.id }}', '0');" value="False" {% if allow_user_answers %}{% else %}checked{% endif %}/>
+								No
+							</label>
+							<span id="set-allow-user-answer-indicator" style="display: none;"><img src="/i/dark_blue_sm_indicator.gif"></span>
+						</div>
+					  </div>
+				{% endif %}		
+				
+				{% if edit_mode %}
+							
+				<div class="create-box">
+					<h2 style="display: inline;">Poll is: </h2>
+					<div id="poll-activity" style="display: inline;">
+						{% if poll.active %}<span class="active-poll">Active</span>{% else %}<span class="inactive-poll">Inactive</span>{% endif %}
+					</div>
+					<span id="poll-activity-indicator" style="display: none;"><img src="/i/dark_blue_sm_indicator.gif"></span>
+					<img onclick="$('#help-create-active').slideToggle();" title="Help" class="image-icon" class="image-icon" src="/i/icons/help.png"/>
+					<div id="help-create-active">If your poll is 'active', it is live and available to other users to vote and comment on.  If your poll is 'inactive', it is no longer accessible to others.<br/><br/>While the poll is inactive, you may edit additional settings.  You cannot delete a poll, but you can leave it inactive forever.<br/><br/>Your poll will become active forever once it has received {{POLL_VOTES_BEFORE_PERMANENTLY_ACTIVE }} votes.</div> 
+					 <div>
+						<input type="radio" name="active_poll_group" id="active_poll_0" value="1" onclick="creatorActive('{{ poll.id }}', '1');" {% ifequal poll.active 1 %}checked{% endifequal %}/> Active
+					</div>
+					{% if edit_active %}
+					<div>
+						<input type="radio"  name="active_poll_group" id="active_poll_1" value="0"onclick="creatorActive('{{ poll.id }}', '0');" {% ifequal poll.active 0 %}checked{% endifequal %} /> Inactive
+					</div>
+					{% endif %}
+					
+				</div>
+				{% endif %}
+				
+				
+				{% if edit_mode %}
+					<div class="create-box">
+						<input type="submit" onclick="document.getElementById('pollcreatehidden').value='saveupdate';" value="Update Poll"/>
+					</div>
+				{% else %}
+					<div class="create-box">					
+						<input type="submit" onclick="document.getElementById('pollcreatehidden').value='save';" value="Preview"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+						<input type="submit" value="Start Poll"/>					
+					</div>
+				{% endif %}
+					
+	
+				<input type="hidden" name="pollcreatehidden" id="pollcreatehidden" value="finish"/>
+			</form>
+		
+		</div>
+
+
+		
+	
+	</div>
+	
+
+{% endblock content %}

@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+			
+		<META NAME="DESCRIPTION" 
+			CONTENT="{% if meta_desc %}{{ meta_desc }}{% else %}Questions and answers on society, pop culture, books, movies, food, sports, travel, tv, music, the internet.  Network and share with others.{% endif %}">
+		
+		<title>{% block title %}{{ SITE_NAME }}{% endblock %}</title>
+		
+		
+		<!-- Google webmaster tools -->
+		<meta name="verify-v1" content="Hk1UOJg+hwzpF3g9m8yE10f2DkKrC+HBV6igIy14EXA=" />
+		<!-- MSN webmaster tools -->
+		<meta name="msvalidate.01" content="15EA877093879A7252BEC8C4927124AE" />
+		
+		<link rel="icon" type="image/png" href="/i/favicon.png" />
+		<link rel="apple-touch-icon" type="image/png" href="/i/apple-touch-icon.png"/>
+		
+		<link rel="stylesheet" type="text/css" href="/c/base.css">
+		<link rel="stylesheet" type="text/css" href="/c/jquery.autocomplete.css" />
+		
+		<script type="text/javascript" src="/j/jquery-1.3.2.min.js"></script>
+		<script type="text/javascript" src="/j/scripts.js"></script>
+
+		<script type="text/javascript" src="/j/jquery-autocomplete/jquery.autocomplete.min.js"></script>
+		<script type="text/javascript" src="/j/jquery.form.js"></script>
+		
+		<script type="text/javascript" src="/j/jquery.lightbox-0.5.pack.js"></script>
+		<link rel="stylesheet" type="text/css" href="/c/jquery.lightbox-0.5.css" media="screen" />
+		
+		{% block moreHead %}
+			
+		{% endblock moreHead %}
+	</head>
+		
+	<body>
+	
+		<script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>
+		
+		<div id="main">
+			{% if debug %}
+				{% comment %}
+				<div id="debug">
+					<h1>DEBUG MODE ON - DEV</h1>
+				</div>
+				{% endcomment %}
+			{% endif %}
+			<div id="hd">
+				{% include "base/header.html" %}
+			</div>
+			
+			{% if show_ad %}
+				<div class="leader-advertisement">			
+					{{ leader_board_ad|safe }}
+				</div>
+			{% endif %}			
+			
+			<div id="bd">
+				{% block content %}
+					{# BLOCK CONTENT GOES HERE #}
+				{% endblock content %}
+			</div>
+		
+			<div id="ft">
+				{% include "base/footer.html" %}
+			</div>
+		</div>
+		
+		<script type="text/javascript">
+		var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+		document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+		<script type="text/javascript">
+		try {
+		var pageTracker = _gat._getTracker("UA-172998-7");
+		pageTracker._trackPageview();
+		} catch(err) {}</script>
+	
+		<script type="text/javascript"> 
+			FB.init("{{ FACEBOOK_API_KEY }}", "/xd_receiver.htm"); 
+		</script>
+
+	
+	</body>	
+</html>

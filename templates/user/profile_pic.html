@@ -1,0 +1,17 @@
+{% extends "base/user_nav.html" %}
+
+{% block title %}
+	{{ SITE_NAME }} - Edit your picture 
+{% endblock title %}
+
+{% block content %}
+
+	<div><a href="/profile/{{ user.username }}/">Back to profile</a></div>
+	<a href="{{ USER_FILES_URL }}{{ pic }}"><img src="{{ USER_FILES_URL }}{{ USER_FILES_THUMBS_BIG }}{{ pic }}"/></a>
+	<div>Upload a pic</div>
+	<form method="post" action="/profile/{{ user.username }}/pic/" encType='multipart/form-data'>
+		{{ form }}
+	<div><input type="submit" value="Upload"/></div>
+	</form>
+
+{% endblock %}

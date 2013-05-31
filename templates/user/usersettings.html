@@ -1,0 +1,108 @@
+{% extends "base/user_nav.html" %}
+{% load get_user_pic %}
+{% block title %}
+	{{ SITE_NAME }} - Edit your settings 
+{% endblock title %}
+
+{% block content %}
+<div id="user-settings">
+	<h1>User settings</h1>
+	
+	<div class="user-setting">
+		Open links in new window (default: Yes)<span id="link-new-window-indicator" style="display:none;"><img src="/i/dark_blue_sm_indicator.gif"></span>
+		<div class="setting-callback"><div id="link-new-window-callback"></div></div>
+		<div id="link-new-window">
+			<div>
+				<input {% ifequal data.link_in_new_window 1 %}checked="checked"{% endifequal %} type="radio" id="input_link_new_window" value="1" name="link_new_window" onclick="return updateSetting('link-new-window', '101', '1');" /> Yes
+			</div>
+			<div>
+				<input {% ifequal data.link_in_new_window 0 %}checked="checked"{% endifequal %} type="radio" id="input_link_new_window_no" value="0" name="link_new_window" onclick="return updateSetting('link-new-window', '101', '0');" /> No
+			</div>
+		</div>
+	</div>
+
+		
+	<div class="user-setting">User selected default chart type (default: Pie)<span id="default-chart-setting-indicator" style="display:none;"><img src="/i/dark_blue_sm_indicator.gif"></span>
+	<div class="setting-callback"><div id="default-chart-setting-callback"></div></div>
+		<div id="default-chart-setting">
+			<div>
+				<input {% ifequal data.default_chart_type 'pie' %}checked="checked"{% endifequal %} type="radio" id="input_view_chart_pie" value="pie" name="chartview" onclick="return updateSetting('default-chart-setting', '100', 'pie');" /> Pie
+			</div>
+			<div>
+				<input {% ifequal data.default_chart_type 'bar' %}checked="checked"{% endifequal %} type="radio" id="input_view_chart_bar" value="bar" name="chartview" onclick="return updateSetting('default-chart-setting', '100', 'bar');" /> Bar
+			</div>
+			<div>		
+				<input {% ifequal data.default_chart_type 'hbar' %}checked="checked"{% endifequal %} type="radio" id="input_view_chart_hbar" value="hbar" name="chartview" onclick="return updateSetting('default-chart-setting', '100', 'hbar');" /> HBar 
+			</div>
+		</div>
+	</div>
+	
+	<div class="user-setting">
+		Email me when someone votes on my poll (default: Yes)<span id="email-on-vote-indicator" style="display:none;"><img src="/i/dark_blue_sm_indicator.gif"></span>
+		<div class="setting-callback"><div id="email-on-vote-callback"></div></div>
+		<div id="email-on-vote">
+			<div>
+				<input {% ifequal data.email_on_vote 1 %}checked="checked"{% endifequal %} type="radio" id="email_on_vote_1" value="1" name="email_on_vote" onclick="return updateSetting('email-on-vote', '102', '1');" /> Yes
+			</div>
+			<div>
+				<input {% ifequal data.email_on_vote 0 %}checked="checked"{% endifequal %} type="radio" id="email_on_vote_0" value="0" name="email_on_vote" onclick="return updateSetting('email-on-vote', '102', '0');" /> No
+			</div>
+		</div>
+	</div>
+
+	<div class="user-setting">
+		Email me when someone comments on my poll (default: Yes)<span id="email-on-poll-comment-indicator" style="display:none;"><img src="/i/dark_blue_sm_indicator.gif"></span>
+		<div class="setting-callback"><div id="email-on-poll-comment-callback"></div></div>
+		<div id="email-on-poll-comment">
+			<div>
+				<input {% ifequal data.email_on_poll_comment 1 %}checked="checked"{% endifequal %} type="radio" id="email_on_poll_comment_1" value="1" name="email_on_poll_comment" onclick="return updateSetting('email-on-poll-comment', '103', '1');" /> Yes
+			</div>
+			<div>
+				<input {% ifequal data.email_on_poll_comment 0 %}checked="checked"{% endifequal %} type="radio" id="email_on_poll_comment_0" value="1" name="email_on_poll_comment" onclick="return updateSetting('email-on-poll-comment', '103', '0');" /> No
+			</div>
+		</div>
+	</div>
+
+	<div class="user-setting">
+		Email me when someone replies to my comment on a poll (default: Yes)<span id="email-on-comment-reply-indicator" style="display:none;"><img src="/i/dark_blue_sm_indicator.gif"></span>
+		<div class="setting-callback"><div id="email-on-comment-reply-callback"></div></div>
+		<div id="email-on-comment-reply">
+			<div>
+				<input {% ifequal data.email_on_comment_reply 1 %}checked="checked"{% endifequal %} type="radio" id="email_on_comment_reply_1" value="1" name="email_on_comment_reply" onclick="return updateSetting('email-on-comment-reply', '104', '1');" /> Yes
+			</div>
+			<div>
+				<input {% ifequal data.email_on_comment_reply 0 %}checked="checked"{% endifequal %} type="radio" id="email_on_comment_reply_0" value="0" name="email_on_comment_reply" onclick="return updateSetting('email-on-comment-reply', '104', '0');" /> No
+			</div>
+		</div>
+	</div>
+	
+	{% comment %}
+		<div class="user-setting">always hide results spillover (default true)</div>
+		Privacy
+		<div class="user-setting">Allow users to see what polls you've voted on (default true)</div>
+		<div class="user-setting">Automatically post polls to your facebook (default true)</div>
+	{% endcomment %}
+	
+	{% if data.facebook_id %}
+	
+		{# BEGIN FACEBOOK SETTINGS #}
+		
+		<div class="user-setting">
+			Use your Facebook profile pic or your Pollstruck pic<span id="which-pic-indicator" style="display:none;"><img src="/i/dark_blue_sm_indicator.gif"></span>
+			<div class="setting-callback"><div id="which-pic-callback"></div></div>
+			<div id="which-pic">
+				<div>
+					<input {% ifequal data.use_profile_pic 1 %}checked="checked"{% endifequal %} type="radio" id="which_pic_pollstruck" value="1" name="which_pic" onclick="return updateSetting('which-pic', '200', '1');" /> Pollstruck pic
+				</div>
+				<div>
+					<input {% ifequal data.use_profile_pic 0 %}checked="checked"{% endifequal %} type="radio" id="which_pic_facebook" value="0" name="which_pic" onclick="return updateSetting('which-pic', '200', '0');" /> Facebook pic
+				</div>
+			</div>
+		</div>		
+		
+	{% endif %}	
+	
+	<br/><div class="button-orange" onclick="window.location='/profile/{{ user.username }}/'">Back to profile</div>
+	
+</div>
+{% endblock %}

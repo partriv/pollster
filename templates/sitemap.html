@@ -1,0 +1,14 @@
+{% extends "base/base.html" %}
+
+{% block title %}
+	{{ SITE_NAME }} - Sitemap
+{% endblock title %}
+
+{% block content %}
+{% for title, url in urls %}
+	<div style="margin-bottom: 3px; font-size: 10px;display:inline;"><a href="{{ url }}">{{ title }}</a></div>&nbsp;&middot;&nbsp;	
+{% endfor %}
+
+{% endblock %}
+
+

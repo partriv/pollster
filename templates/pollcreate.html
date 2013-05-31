@@ -1,0 +1,28 @@
+{% extends "base/base.html" %}
+
+{% block title %}
+	{{ SITE_NAME }} Poll Creator 
+{% endblock title %}
+
+{% block content %}
+<div id="poll-creator">
+
+	<h1>What's on your mind?</h1>
+
+	<form method="post" action=".">		
+		<div class="error">{{ form.question.errors }}</div>
+		<span id="poll_question">{{ form.question }}</span>
+		<span id="poll_question_btn">
+			<input type="submit" value=""/>
+		</span >
+	</form>
+	
+	<br/>
+	{% comment %}
+	{% if inactive_polls %}
+		<div id="inactive_text"><a href="/profile/{{ user }}/not-finished/">Or check out these polls</a></div>		
+	{% endif %} 
+	{% endcomment %}
+</div>
+{% endblock content %}
+

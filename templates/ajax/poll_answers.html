@@ -1,0 +1,12 @@
+{% if dupe %}
+	<div class="error">That answer is already in the list!</div>
+{% endif %}
+{% if whitespace %}
+	<div class="error">Please enter a valid answer!</div>
+{% endif %}
+
+{% for a in answers %}
+	<div class="prop-list-item">
+		{% if edit_mode %}{% else %}<img onclick="return deleteAnswer('{{ a.id }}');" class="image-icon" title="Delete this answer" src="/i/icons/cross_sm.png"/>{% endif %}&nbsp;{{ a.answer }} 
+	</div>
+{% endfor %}

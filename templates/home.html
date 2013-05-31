@@ -1,0 +1,70 @@
+{% extends "base/base.html" %}
+
+{% block title %}
+
+	{% ifequal selected 'recent' %}
+		 Recent Polls 
+	{% endifequal %}
+	{% ifequal selected 'popular' %}
+		Popular Polls
+	{% endifequal %}
+	{% ifequal selected 'votedon' %}
+		Most Voted On Polls
+	{% endifequal %}
+	{% ifequal selected 'new' %}
+		Newest Polls
+	{% endifequal %}		
+	{% ifequal selected 'commented' %}
+		Most Commented on Polls
+	{% endifequal %}
+	{% ifequal time_link_prefix '/24h' %}
+		  in 24 Hours
+	{% endifequal %}
+	{% ifequal time_link_prefix '/7d' %}
+		 in 7 Days
+	{% endifequal %}
+	{% ifequal time_link_prefix '/30d' %}
+		 in 30 Days
+	{% endifequal %}
+	{% ifequal time_link_prefix '/365d' %}
+		 in 1 Year
+	{% endifequal %}
+	{% ifequal time_link_prefix '/all' %}
+		 of All Time
+	{% endifequal %}	
+	 - Pollstruck
+{% endblock title %}
+
+
+{% block content %}
+	
+	
+	
+	
+				
+	<div class="control-bar">
+		<span class="{% ifequal selected 'recent' %}selected{% endifequal %}"><a href="/" title="Polls that are recently active">Recent</a></span>
+		<span class="{% ifequal selected 'popular' %}selected{% endifequal %}"><a href="/popular/" title="Popular polls">Popular</a></span>
+		<span class="{% ifequal selected 'votedon' %}selected{% endifequal %}"><a href="/votedon/" title="Polls that have the most votes">Most Voted On</a></span>
+		<span class="{% ifequal selected 'new' %}selected{% endifequal %}"><a href="/new/" title="Polls that are the newest">Newest</a></span>
+		<span class="{% ifequal selected 'commented' %}selected{% endifequal %}"><a href="/commented/" title="Polls with the most discussion">Most Commented</a></span>
+		
+		<select id="hourly-tabnav">
+			<option class="tab{% ifequal time_link_prefix '/24h' %}-selected{% endifequal %}"><a href="{{ link_prefix }}/24h/" title="Polls from the last 24 hours">24 Hours</a></option>
+			<option class="tab{% ifequal time_link_prefix '/7d' %}-selected{% endifequal %}"><a href="{{ link_prefix }}/7d/" title="Polls from the last 7 days">7 Days</a></option>
+			<option class="tab{% ifequal time_link_prefix '/30d' %}-selected{% endifequal %}"><a href="{{ link_prefix }}/30d/" title="Polls from the last 30 days">30 Days</a></option>
+			<option class="tab{% ifequal time_link_prefix '/365d' %}-selected{% endifequal %}"><a href="{{ link_prefix }}/365d/" title="Polls from the last year">1 Year</a></option>
+			<option class="tab{% ifequal time_link_prefix '/all' %}-selected{% endifequal %}"><a href="{{ link_prefix }}/all/" title="All polls">All</a></option>
+		</select>
+							
+	</div>
+
+		
+
+	
+<div id="home">
+	
+	{% include "base/poll_main_list.html" %}
+
+</div>	
+{% endblock content %}

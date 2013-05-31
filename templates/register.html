@@ -1,0 +1,70 @@
+{% extends "base/base.html" %}
+
+{% block title %}
+	{{ SITE_NAME }} - Register 
+{% endblock title %}
+
+{% block content %}
+<div id="registration">
+	<h1>Registration</h1>
+	<h2>
+		Hello and thanks for coming to {{ SITE_NAME }}.  Please take a moment to register, it's really quick and easy.	
+	</h2>
+	<div id="fb-login-btn"> 
+	  	<div class="small-grey-text">If you don't feel like registering, you can sign in with your Facebook account if you have one.</div>	  	
+	  	<fb:login-button size="large" background="white" length="long" onlogin="window.location = '/facebook-login/?next={% if next %}{{ next }}{% endif %}';"></fb:login-button>	  	
+	  </div>
+	  <br/>	
+	  <form id="frmregister" name="frmregister" action="/register/" method="post">
+		{% if error %}
+			<div class="error">{{ error }}</div>
+		{% endif %}
+
+		<div class="regfield">
+			<div class="error">{{ form.name.errors }}</div>
+			<span class="label">Name</span> {{ form.name }}
+		</div>
+		<div class="reg-field">
+			<div class="error">{{ form.username.errors }}</div>
+			<span class="label">Username</span> {{ form.username }} <span id="usermatch"></span>
+			<br/>
+			<div class="help-username">{{ form.username.help_text }}</div>
+		</div>
+		<div class="reg-field">
+			<div class="error">{{ form.email.errors }}</div>
+			<span class="label">Email</span>  {{ form.email }}
+		</div>
+		<div class="reg-field">
+			<div class="error">{{ form.password.errors }}</div>
+			<span class="label">Password</span> {{ form.password }}
+		</div>
+		<div class="reg-field">
+			<div class="error">{{ form.confirm_password.errors }}</div>
+			<span class="label">Confirm Password</span> {{ form.confirm_password }}
+		</div>
+		<div class="regfield">
+			<div class="error">{{ form.next.errors }}</div>
+			{{ form.next }}
+		</div>
+		<div class="reg-field">
+			{{ form.imghash }}
+			<div class="error">{{ form.imgtext.errors }}</div>
+			<span class="label">Text from the image</span> {{ form.imgtext }}<br/>
+			<div class="help-captcha">{{ form.imgtext.help_text }}</div>
+		</div>
+			<div class="captcha">
+				<img src="/i/captchas/{{ cap_image }}">
+			</div>
+		
+			<div class="error">{{ form.agree_to_terms.errors }}</div>
+			<div class="agree">
+				{{ form.agree_to_terms }}Agree to <a href="/tos/" target="_blank">Terms of Service</a><br/><br/>				
+				<div class="small-italics">Pollstruck will never sell/give/show/whisper your email address to anyone.  Ever.</div>
+			</div> 
+		
+		<div class="reg-btn">
+			<input type="submit" value="Register"/>
+		</div>
+	</form>
+</div>
+{% endblock content %}

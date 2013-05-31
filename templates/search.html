@@ -1,0 +1,36 @@
+{% extends "base/tag_nav.html" %}
+
+{% block title %}
+	{% if tag %}
+	Tags - 
+	{% else %}
+	Search - 
+	{% endif %}
+	{{ search_terms }} - Pollstruck
+{% endblock title %}
+
+{% block content %}
+	<div id="search">
+		<div class="search-head">
+			<h1>Search&nbsp;&nbsp;</h1>&nbsp;{{ form.type }}
+		</div> 
+
+			<div class="search-box">{{ form.searchbox }} <a href="/" onclick="return doSearch();">Search</a>
+				{% if tag %}
+					<div>to search multiple tags, seperate by comma</div>
+				{% endif %}
+			</div>
+		
+		<div class="sort-bar">
+			<div>Sort by <a {% ifequal sort 'votes' %}class="selected" {% endifequal %} href="{{ prefix }}/sort/votes/" rel="nofollow">most votes</a> &#183; 
+			<a {% ifequal sort 'comments' %}class="selected" {% endifequal %} href="{{ prefix }}/sort/comments/" rel="nofollow">most comments</a> &#183; 
+			<a {% ifequal sort 'date' %}class="selected" {% endifequal %} href="{{ prefix }}/sort/date/" rel="nofollow">date</a></div>
+		</div>
+		
+		<div id="search-listings">{% include "base/poll_main_list.html" %}</div>
+	
+		<script type="text/javascript">
+			document.getElementById("id_searchbox").value = '{{ search_terms }}';
+		</script>
+	</div>
+{% endblock content %}

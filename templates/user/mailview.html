@@ -1,0 +1,58 @@
+{% extends "base/user_nav.html" %}
+{% load get_user_pic %}
+
+{% block title %}
+	{{ SITE_NAME }} - Inbox {% ifnotequal newMailCnt 0 %}({{ newMailCnt }}){% endifnotequal %} 
+{% endblock title %}
+
+{% block content %}
+<div id="mailbox">
+<div class="top-stuff">
+	<a href="/profile/{{ user.username }}/">Back to your profile</a>
+	 | {% if sent_mode %}<a href="/profile/{{ user.username }}/mail/view/">Inbox</a>{% else %}<a href="/profile/{{ user.username }}/mail/sent/">Sent mail</a>{% endif %}
+	 | You have {% if sent_mode%}sent {% endif %}{{ msgCount }} messages	 
+	 {% ifnotequal newMailCnt 0 %}
+		 <span id="top-new-msgs"> | {{ newMailCnt }} new messages
+		 	<span> | <a href="#" onclick="return markAllMail();">Mark all as read</a></span>
+		 </span>
+	 {% endifnotequal %}
+	 
+</div>
+	{% for message in page.object_list %}
+		<div class="message-row">
+			<div {% if message.read or sent_mode %}class="msg-read"{% else %}class="msg"{% endif %} id="msg-{{ message.id }}" onclick="fadeMailBody('{{ message.id }}', '{{ sent_mode }}')">
+				<div id="msg-row-{{ message.id }}">
+					<div class="msg-subject">{{ message.subject }}&nbsp;</div>
+					{% if sent_mode %}
+						<span class="from">To <a href="/profile/{{ message.to_user.username }}/">{{ message.to_user }}</a>{{ message.to_user.id|get_user_pic:"tiny"|safe }}&nbsp;&#183;</span>
+					{% else %}
+						<span class="from">From <a href="/profile/{{ message.from_user.username }}/">{{ message.from_user }}</a>{{ message.from_user.id|get_user_pic:"tiny"|safe }}&nbsp;&#183;</span>
+					{% endif %}
+					<span class="date">&nbsp;{{ message.date_created|date:"D d M Y g:i A" }}</span>
+				</div>				
+			</div>
+			
+			<div id="message-row-{{ message.id }}" style="display:none;">
+				<div class="message-wrapper"> 
+					<div class="body">{{ message.body|safe }}</div>
+					
+					<div class="user-mail"><img src="/i/icons/email_edit.png"/><a href="#" onclick="$('#profile-message-form-{{ message.id }}').fadeIn(); $('#profile-message-sent-{{ message.id }}').hide(); return false;">Reply</a></div>
+					<div id="profile-message-form-{{ message.id }}" style="display:none;">
+						<div class="profile-message-form">
+							<form method="post" action="/profile/{{ message.from_user.username }}/mail/">
+								<div class="message-field">Subject: <input type="text" id="id_subject_{{ message.id }}" value="Re: {{ message.subject }}"/></div>
+								<div class="message-field">Message: <textarea id="id_body_{{ message.id }}" cols="40" rows="10"/></textarea></div>
+								<a href="#" onclick="return mailUser('{{ message.from_user.username }}', '{{ message.id }}');">Send</a>
+								<span id="profile-message-send-{{ message.id }}" style="display: none;">&nbsp;Sending&nbsp;<img src="/i/dark_blue_sm_indicator.gif"></span>
+							</form>
+						</div>
+					</div>
+					<div id="profile-message-sent-{{ message.id }}" style="display:none;"></div> 
+				</div>
+			</div>		
+		</div>
+	{% endfor %}
+	{% include "base/paging_controls.html" %}
+		
+</div>
+{% endblock content %}

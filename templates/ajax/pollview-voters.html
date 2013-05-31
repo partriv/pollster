@@ -1,0 +1,17 @@
+{% load get_user_pic %}
+<div class="result-item">
+	{# <div class="title">{{ votes }} user{% ifequal votes 1 %}{% else%}s{% endifequal%} who voted for <span class="answer">{{ answer }}</span></div> #}
+	
+	{% for u in users %}
+		<span class="user">
+			<a href="/profile/{{ u.username }}/" title="{{ u.username }}">
+				{{ u.id|get_user_pic:"medium"|safe }}				
+			</a>
+		</span>
+		&nbsp;
+	{% endfor %}
+</div>
+
+<script type="text/javascript"> 
+	FB.init("{{ FACEBOOK_API_KEY }}", "/xd_receiver.htm"); 
+</script>

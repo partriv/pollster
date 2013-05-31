@@ -1,0 +1,24 @@
+{% load get_user_pic %}
+<div id="poll-mini-listing">
+	{% if mini_polls.polls %}
+		{% for p, file, more_pics, tags, domain, voted, icons, data, watching in mini_polls.polls %}	
+		<div class="poll-mini-listings">
+			{% if voted %}<img src="/i/voted-check-mini.gif" title="You voted on this"/>{% endif %}
+			<a href="/view-poll/{{ p.url }}/">{{ p.question }}</a>
+			<div>
+				<span class="poll-mini-icons">
+					{% if p.link %}<img src="/i/icons/link.png" title="This poll has a link"/>{% endif %}
+					{% ifequal more_pics 1 %}<img src="/i/icons/image.png" title="This poll has a pic"/>{% endifequal %}
+					{% ifequal more_pics 2 %}<img src="/i/icons/pictures.png" title="This poll has more pictures"/>{% endifequal %}
+					{% if p.video_link %}<img src="/i/icons/film.png" title="This poll has a video"/>{% endif %}
+				</span>							
+				<span class="poll-mini-votes">{{ p.total_votes }} votes</span> &#183; 
+				<span class="poll-mini-user">Posted by <a href="/profile/{{ p.user }}/">{{ p.user }}{{ p.user.id|get_user_pic:"tiny"|safe }}</a></span>
+			</div>
+		</div>
+		
+		{% endfor %}
+	{% else %}
+		Looks like there's nothing here!
+	{% endif %}
+</div>

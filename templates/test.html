@@ -1,0 +1,47 @@
+{% extends "base/base.html" %}
+{% block content %}
+	
+	{% for uInfo in info %}
+        <img src="{{ uInfo.pic }}">{{ uInfo.name }}<br/>
+    {% endfor %}
+    
+    
+	
+	<fb:header>
+	  Welcome, {{ name }}!
+	</fb:header>
+		<br/>
+	<fb:prompt-permission perms="status_update"> Grant permission for status updates </fb:prompt-permission>
+		<br/>
+	<fb:prompt-permission perms="publish_stream	"> Grant permission for publish_stream</fb:prompt-permission>
+		<br/>
+	<fb:prompt-permission perms="share_item"> Grant permission for share_item</fb:prompt-permission>
+	
+	
+	<div id="user"></div>
+	
+	<script type="text/javascript"> 
+	function update_user_box() { 
+		var user_box = document.getElementById("user"); 
+		// add in some XFBML. note that we set useyou=false so it doesn't display "you" 
+		
+		user_box.innerHTML = "<span>" + 
+					"<fb:profile-pic uid='loggedinuser' facebook-logo='true'></fb:profile-pic>" + 
+					"Welcome, <fb:name uid='loggedinuser' useyou='false'></fb:name>. You are signed in with your Facebook account." 
+					+ "</span>"; 
+	
+		// because this is XFBML, we need to tell Facebook to re-process the document 
+		FB.XFBML.Host.parseDomTree(); 
+	} 
+	</script> 
+	
+				
+	<script type="text/javascript"> 
+
+		
+	
+		FB.init("{{ FACEBOOK_API_KEY }}", "/xd_receiver.htm"); 
+	</script>
+	
+
+{% endblock content %}

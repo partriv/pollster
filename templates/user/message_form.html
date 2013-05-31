@@ -1,0 +1,5 @@
+<form method="post" action="/profile/{{ user_for_profile.username }}/mail/">
+	<div class="message-field">Subject: {{ messageForm.subject }}</div>
+	<div class="message-field">Message: {{ messageForm.body }}</div>
+	<a href="#" onclick="return mailUser('{{ user_for_profile.username }}');">Send</a>
+</form>

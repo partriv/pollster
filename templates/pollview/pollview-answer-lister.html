@@ -1,0 +1,29 @@
+{% load get_user_pic %}
+
+{% comment %}
+all over this template if you have
+a.answer.answer that means you are dealing with a PollResultListItem
+if you have a.answer you are dealing with PolLResultSpilloverListItem
+{% endcomment %}
+
+{% for a in results %}						
+	<div class="result-link">
+
+		{% ifequal a.votes_label 0 %}
+		{% else %}						
+				{{ a.answer.answer }} <span class="vote-count">{{ a.votes_label }} {# a.percent_votes|floatformat #}</span>				
+		{% endifequal %}
+		
+				
+	</div>														
+{% endfor %}
+
+{% if results_wo_votes %}
+	<div>
+		No votes for {% for a in results_wo_votes %}<span class="novote">{% if forloop.last %} or {% endif %}{{ a.answer.answer }}</span>{% if forloop.last %}{% else %}, {% endif %}{% endfor %}.
+	</div>
+{% endif %}
+
+<script type="text/javascript"> 
+	FB.init("{{ FACEBOOK_API_KEY }}", "/xd_receiver.htm"); 
+</script>
